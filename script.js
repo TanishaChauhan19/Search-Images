@@ -9,7 +9,7 @@ let keyword="";
 let page=1;
 
 async function searchImages() {
-    keyword = searchBox.value.trim(); // ✅ Trim spaces to prevent accidental empty search
+    keyword = searchBox.value.trim(); // Trim spaces to prevent accidental empty search
 
      // Call Netlify function instead of Unsplash directly
     const url = `/.netlify/functions/fetchImages?query=${keyword}&page=${page}&per_page=12&cacheBust=${Date.now()}`;
@@ -17,7 +17,7 @@ async function searchImages() {
     try {
         const response = await fetch(url);
 
-        // ✅ Handle API errors properly
+        // Handle API errors properly
         if (!response.ok) {
             throw new Error(`API Error: ${response.status} ${response.statusText}`);
         }
@@ -130,6 +130,8 @@ clearButton.addEventListener('click', function() {
 
     // Show the recommendation section again
     recommendSection.style.display = 'block';
+    //Prevent accidental API calls
+    stopAPICall = true;
 });
 
 
