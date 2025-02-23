@@ -20,7 +20,7 @@ Setup Instructions
 To get this project up and running locally:
 Clone the repository:
           
-    git clone https://github.com/T/image-search-engine.git
+    git clone https://github.com/TanishaChauhan19/Search-Images.git
     cd image-search-engine
 
 Files Overview
