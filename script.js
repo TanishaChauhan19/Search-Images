@@ -25,9 +25,8 @@ async function searchImages() {
         const data = await response.json();
 
         // Check if results exist before using them
-        if (!data.results || data.results.length === 0) {
+        if (!data.results) {
             alert(`No results found for "${keyword}". Try another search!`); // Show alert
-            searchResult.innerHTML = `<p>No results found for "${keyword}".</p>`;
             showMoreBtn.style.display = "none";
             return;
         }
