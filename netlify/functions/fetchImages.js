@@ -8,7 +8,7 @@ exports.handler = async (event) => {
         return { statusCode: 500, body: "API key is missing!" };
     }
 
-    const API_URL = `https://api.unsplash.com/search/photos?page=${page}&query=${query}&client_id=${API_KEY}&per_page=12`;
+    const API_URL = `https://api.unsplash.com/search/photos?page=${page}&query=${query}&client_id=${accessKey}&per_page=12`;
 
 
     try {
