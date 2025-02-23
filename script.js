@@ -11,13 +11,7 @@ let page=1;
 async function searchImages() {
     keyword = searchBox.value.trim(); // ✅ Trim spaces to prevent accidental empty search
 
-    // ✅ Stop function if search is empty
-    if (!keyword) {
-        alert("Please enter a search term!"); // 🔔 Show alert instead of console.warn
-        return;
-    }
-
-    // ✅ Call Netlify function instead of Unsplash directly
+     // Call Netlify function instead of Unsplash directly
     const url = `/.netlify/functions/fetchImages?query=${keyword}&page=${page}&per_page=12&cacheBust=${Date.now()}`;
 
     try {
