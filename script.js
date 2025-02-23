@@ -13,7 +13,8 @@ async function searchImages() {
     keyword = searchBox.value;
     
     // Call Netlify function instead of Unsplash directly
-    const url = `/.netlify/functions/fetchImages?query=${keyword}&page=${page}&per_page=12`;
+    const url = `/.netlify/functions/fetchImages?query=${keyword}&page=${page}&per_page=12&cacheBust=${Date.now()}`;
+
 
     try {
         const response = await fetch(url);
