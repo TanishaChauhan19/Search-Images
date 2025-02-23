@@ -31,7 +31,9 @@
     <a href="https://unsplash.com/s/photos/clock" target="_self" class="image"><img src="images/clock.jpg" alt="clock" ></a>
     <a href="https://unsplash.com/s/photos/star" target="_self" class="image"><img src="images/star.jpg" alt="star" ></a>
     </div>
-    <script src="config.js"></script>
+    <script>
+        window.API_KEY = "{{ API_KEY }}"; // Netlify injects the key here
+    </script>
 <script src="script.js"></script>
 </body>
 

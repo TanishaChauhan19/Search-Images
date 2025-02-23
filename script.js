@@ -1,4 +1,4 @@
-const accessKey=window.env.API_KEY;
+const accessKey=window.API_KEY;
 const searchForm =document.getElementById("search-form");
 const searchBox =document.getElementById("search-box");
 const searchResult=document.getElementById("searchResult");
