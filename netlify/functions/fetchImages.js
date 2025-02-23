@@ -2,13 +2,6 @@ const fetch = require("node-fetch");
 
 exports.handler = async function (event) {
     const query = event.queryStringParameters.query;
-     if (!query) {
-        return {
-        statusCode: 400,
-        body: JSON.stringify({ error: "No search query provided." })
-     };
-}
-
     const page = event.queryStringParameters.page || 1; //Define page properly
     const accessKey = process.env.API_KEY; // API key stays hidden
 
