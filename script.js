@@ -1,4 +1,3 @@
-const accessKey=window.API_KEY;
 const searchForm =document.getElementById("search-form");
 const searchBox =document.getElementById("search-box");
 const searchResult=document.getElementById("searchResult");
@@ -10,24 +9,42 @@ let keyword="";
 let page=1;
 
 async function searchImages() {
-    keyword = searchBox.value;
-    
-    // Call Netlify function instead of Unsplash directly
-    const url = `/.netlify/functions/fetchImages?query=${keyword}&page=${page}&per_page=12&cacheBust=${Date.now()}`;
+    keyword = searchBox.value.trim(); // ✅ Trim spaces to prevent accidental empty search
 
+    // ✅ Stop function if search is empty
+    if (!keyword) {
+        alert("Please enter a search term!"); // 🔔 Show alert instead of console.warn
+        return;
+    }
+
+    // ✅ Call Netlify function instead of Unsplash directly
+    const url = `/.netlify/functions/fetchImages?query=${keyword}&page=${page}&per_page=12&cacheBust=${Date.now()}`;
 
     try {
         const response = await fetch(url);
+
+        // ✅ Handle API errors properly
+        if (!response.ok) {
+            throw new Error(`API Error: ${response.status} ${response.statusText}`);
+        }
+
         const data = await response.json();
 
-        // Refresh results when a new search is made
+        // Check if results exist before using them
+        if (!data.results || data.results.length === 0) {
+            alert(`No results found for "${keyword}". Try another search!`); // Show alert
+            searchResult.innerHTML = `<p>No results found for "${keyword}".</p>`;
+            showMoreBtn.style.display = "none";
+            return;
+        }
+
+        //Refresh results only for a new search
         if (page === 1) {
             searchResult.innerHTML = "";
         }
 
-        const results = data.results;
-
-        results.forEach((result) => {
+        // Loop through API results and display images
+        data.results.forEach((result) => {
             const image = document.createElement("img");
             image.src = result.urls.small;
             const imageLink = document.createElement("a");
@@ -38,47 +55,52 @@ async function searchImages() {
             searchResult.appendChild(imageLink);
         });
 
-        showMoreBtn.style.display = "block";
+        // Always show "Show More" unless there are 0 images
+        showMoreBtn.style.display = data.results.length > 0 ? "block" : "none";
+
     } catch (error) {
-        console.error("Error fetching images:", error);
+        alert("Something went wrong. Please try again later!"); // how alert for errors
+        searchResult.innerHTML = `<p>Something went wrong. Please try again later.</p>`;
     }
 }
 
-  
+
 // Voice Recognition Setup (Web Speech API)
 if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
 
-    recognition.continuous = false; // Stop after recognizing one phrase
+    recognition.continuous = false; // Stop after recognizing one phrase (can change to true if needed)
     recognition.lang = 'en-US'; // Set the language to English
     recognition.interimResults = false; // No interim results, only final result
 
-    // Start listening
+    // Show feedback when listening starts
     recognition.onstart = function () {
-        console.log("Voice recognition started");
+        alert("Listening... Speak now! 🎤");
     };
 
-    // Handle the result
+    // Handle the recognized speech result
     recognition.onresult = function (event) {
         const voiceResult = event.results[0][0].transcript;
-        searchBox.value = voiceResult; // Set the voice input to the search box
-        searchImages(); // Trigger the search with the voice input
+        searchBox.value = voiceResult; // set voice input to the search box
+        searchImages(); // Trigger search automatically
     };
 
-    // Error handling
+    // Error handling with alerts
     recognition.onerror = function (event) {
-        console.error("Speech recognition error: ", event.error);
+        alert("Speech recognition error: " + event.error);
     };
 
     // Start voice search when the button is clicked
     startButton.addEventListener('click', function () {
-        recognition.start(); // Start the speech recognition
-        recommendSection.style.display='none';
+        recognition.start(); // Start speech recognition
+        recommendSection.style.display = 'none'; // Hide recommendations
     });
+
 } else {
-    console.log("Your browser doesn't support speech recognition.");
+    alert("Your browser doesn't support speech recognition. ❌"); // Show alert instead of console log
 }
+
 
 searchForm.addEventListener("submit",(e)=>{
     e.preventDefault(); 
@@ -101,14 +123,19 @@ searchBox.addEventListener('input', function() {
     }
 });
 clearButton.addEventListener('click', function() {
-    // Clear the input field
+    //clear the input field
     searchBox.value = '';
 
-    // Hide search results and the "Show More" button
+    //Reset keyword & page number to default
+    keyword = '';
+    page = 1;
+
+    //Hide search results and the "Show More" button
     searchResult.innerHTML = '';
     showMoreBtn.style.display = 'none';
 
     // Show the recommendation section again
     recommendSection.style.display = 'block';
 });
+
 
