@@ -1,4 +1,4 @@
-const accessKey='import.meta.env.VITE_API_KEY';
+const accessKey='process.env.VITE_API_KEY';
 const searchForm =document.getElementById("search-form");
 const searchBox =document.getElementById("search-box");
 const searchResult=document.getElementById("searchResult");
