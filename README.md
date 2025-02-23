@@ -19,7 +19,7 @@ Project Structure
 
 Here’s a screenshot of the app:
 
-  ![Image Description](https://github.com/TanishaChauhan19/-Rain-Weather-Predictor/blob/main/weatherApp%20image.jpg?raw=true)
+  ![Image Description](https://github.com/TanishaChauhan19/Search-Images/commit/6d8cc8ccbe3695f83b4b15214a25694a6081f23c)
 
 
 Setup Instructions
