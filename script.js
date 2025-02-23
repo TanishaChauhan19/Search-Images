@@ -14,15 +14,19 @@ async function searchImages() {
      // Call Netlify function instead of Unsplash directly
     const url = `/.netlify/functions/fetchImages?query=${keyword}&page=${page}&per_page=12&cacheBust=${Date.now()}`;
 
-    try {
         const response = await fetch(url);
 
         // Handle API errors properly
         if (!response.ok) {
             throw new Error(`API Error: ${response.status} ${response.statusText}`);
         }
-
-        const data = await response.json();
+        if (!keyword) {
+            return;
+        }
+        
+        try{
+        
+         const data = await response.json();
 
         // Check if results exist before using them
         if (!data.results&&keyword.length!=0) {
