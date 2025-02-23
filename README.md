@@ -2,7 +2,7 @@
 A simple image search engine using HTML, CSS, and JavaScript. The images are fetched using a hidden API key through a Netlify function for security.
 
 Checkout this out
-    ```bash
+    
     
     https://searchimageshere.netlify.app/
 Project Structure  
