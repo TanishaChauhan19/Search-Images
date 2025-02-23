@@ -15,6 +15,12 @@ Project Structure
     ├── /netlify          # Netlify function folder
     │   └── fetchImages.js # Serverless function to fetch images
     └── README.md         # This README file
+## Screenshot
+
+Here’s a screenshot of the app:
+
+  ![Image Description](https://github.com/TanishaChauhan19/-Rain-Weather-Predictor/blob/main/weatherApp%20image.jpg?raw=true)
+
 
 Setup Instructions
 To get this project up and running locally:
